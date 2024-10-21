@@ -1,0 +1,93 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    {% include 'base components/adminOrdersFilters.html' %}
+    <div class="container">
+        {% for i in page_obj.object_list %}
+            <div class="card col-12 mt-4">
+                <a href="/orders/orderDetail/{{ i.id }}" style="color: black;text-decoration: none">
+
+                    <div class="card-header">
+                        <div class="row" dir="rtl">
+                            <div class="col-md-6 col-12">
+                                <h5>رقم الطلب: {{ i.id }}</h5>
+                            </div>
+                            <div class="col-md-6 col-12 justify-content-md-end d-flex ">
+                                <h5>المستخدم: {{ i.user.first_name }} {{ i.user.last_name }}</h5>
+                            </div>
+                        </div>
+
+                    </div>
+                </a>
+                <div class="card-body">
+                    <div class="row  justify-content-around" dir="rtl">
+                        <a href="/orders/orderDetail/{{ i.id }}" style="color: black;text-decoration: none"
+                           class="col-md-4 col-12">
+
+                            <div class="  ">
+                                <p>رقم الهاتف: <span style="color: red">{{ i.user.phone_number }} </span><span dir="ltr">({{ i.user.whatsapp }})</span></p>
+
+                            </div>
+                        </a>
+                        <div class="col-md-4 col-12 row d-flex align-items-center">
+                            <form method="post" action="{% url 'adminOrdersUpdate' i.id %}" >
+                                {% csrf_token %}
+
+                                <select class="form-select col-4" aria-label="Default select example"  name="status">
+                                    <option value="بانتظار التأكيد"
+                                            {% if i.status == 'بانتظار التأكيد' %}selected{% endif %}><span
+                                            style="color: red">بانتظار التأكيد</span></option>
+                                    <option value="تم التأكيد" {% if i.status == 'تم التأكيد' %}selected{% endif %}>
+                                        <span style="color: green">تم التأكيد</span></option>
+                                    <option value="تم التسليم" {% if i.status == 'تم التسليم' %}selected{% endif %}>
+                                        <span style="color: blue">تم التسليم</span></option>
+
+                                </select>
+                                <input type="submit" class="btn btn-primary mt-2" style="min-width: 80px" value="حفظ">
+
+                            </form>
+                        </div>
+                    </div>
+                    <a href="/orders/orderDetail/{{ i.id }}" style="color: black;text-decoration: none">
+
+                        <div class="row  justify-content-around" dir="rtl">
+
+                            <div class="col-md-4 col-12">
+                                <p>المدينة: {{ i.city.name }}</p>
+                            </div>
+                            <div class="col-md-4 col-12  ">
+                                <p>العنوان: {{ i.address }}</p>
+
+                            </div>
+                        </div>
+                        <div class="row  justify-content-around" dir="rtl">
+
+                            <div class="col-md-4 col-12">
+                                <p>السعر الكلي: {{ i.total_price }}₪</p>
+                            </div>
+                            <div class="col-md-4 col-12  ">
+                                <p><span style="color: #ffc107">اضغط على البطاقة لمعرفة تفاصيل الطلب</span></p>
+
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <a href="/orders/orderDetail/{{ i.id }}" style="color: black;text-decoration: none">
+
+                    <div class="card-footer" dir="rtl">
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <h5> تاريخ الطلب: {{ i.order_date }}</h5>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div style="height: 500px"></div>
+{% include 'base components/adminOrderPagination.html' %}
+{% endblock content %}

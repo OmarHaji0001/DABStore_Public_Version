@@ -1,0 +1,147 @@
+<!-- base components/topSalesCarousel.html -->'
+<style>
+    .custom-card {
+        border-radius: 15px;
+        overflow: hidden;
+        background-color: #fff;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s;
+        display: flex;
+        flex-direction: column;
+        height: 350px; /* Set your desired card height */
+        width: 100%; /* Makes sure cards take full column width */
+        margin-bottom: 30px; /* Space between rows of cards */
+    }
+
+    .card-img-top {
+        height: 200px; /* Image height */
+        object-fit: cover;
+    }
+
+    .col-md-4 {
+        margin-bottom: 20px; /* Space between cards horizontally */
+    }
+
+
+    .custom-card:hover {
+        transform: scale(1.05);
+    }
+
+
+    .card-body {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .card-title {
+        font-size: 1.5em;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .card-price {
+        font-size: 1.2em;
+        color: #28a745;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .card-quantity {
+        font-size: 1em;
+        color: #6c757d;
+        text-align: center;
+    }
+
+    .carousel-controls .btn {
+        background-color: #212429;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    .carousel-controls .btn:hover {
+        background-color: #4c525a;
+        cursor: pointer;
+    }
+
+    .form-control {
+        border-radius: 20px;
+    }
+
+    .btn-primary {
+        border-radius: 20px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .form-control:hover {
+        border-color: #007bff;
+    }
+
+    @media (max-width: 768px) {
+        .carousel-inner .row {
+            gap: 20px; /* Space between stacked cards */
+        }
+
+        .col-md-4 {
+            margin-bottom: 15px; /* Adjust space between stacked cards on smaller screens */
+        }
+    }
+</style>
+<section class="most-sales-carousel mt-5">
+    <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-8">
+                <h2>Top Sales of All Time</h2>
+            </div>
+            <div class="col-md-4 text-end">
+                <div class="carousel-controls">
+                    <button class="btn btn-carousel" data-bs-target="#mostSalesCarousel" role="button"
+                            data-bs-slide="prev">
+                        < Previous
+                    </button>
+                    <button class="btn btn-carousel" data-bs-target="#mostSalesCarousel" role="button"
+                            data-bs-slide="next">
+                        Next >
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mostSalesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-inner">
+                {% for product in top_selling_products %}
+                    {% if forloop.counter0|divisibleby:3 %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="row">
+                    {% endif %}
+                <div class="col-md-4">
+                    <div class="card custom-card">
+                        <a href="{% url 'product' product.id %}" style="text-decoration: none;color: inherit">
+                            <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-price">Price: <span class="price">{{ product.price }}₪</span></p>
+
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                {% if forloop.counter0|add:1|divisibleby:3 or forloop.last %}
+                    </div>
+                    </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>

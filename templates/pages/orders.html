@@ -1,0 +1,81 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    {% include 'base components/ordersFilters.html' %}
+    <div class="container">
+        {% for i in page_obj %}
+            <div class="card col-12 mt-4">
+                <a href="orderDetail/{{ i.id }}" style="color: black;text-decoration: none">
+
+                    <div class="card-header">
+                        <div class="row" dir="rtl">
+                            <div class="col-md-6 col-12">
+                                <h5>رقم الطلب: {{ i.id }}</h5>
+                            </div>
+                            <div class="col-md-6 col-12 justify-content-md-end d-flex ">
+                                <h5>المستخدم: {{ i.user.first_name }} {{ i.user.last_name }}</h5>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="row row justify-content-around" dir="rtl">
+                            <div class="col-md-4 col-12  ">
+                                <p>رقم الهاتف: <span style="color: red">{{ i.user.phone_number }} </span><span dir="ltr">({{ i.user.whatsapp }})</span></p>
+
+                            </div>
+                            <div class="col-md-4 col-12">
+                                {% if i.status == 'بانتظار التأكيد' %}
+                                    <p>الحالة: <span style="color: red">{{ i.status }}</span></p>
+                                {% elif i.status == 'تم التأكيد' %}
+                                    <p>الحالة: <span style="color: green">{{ i.status }}</span></p>
+                                {% elif i.status == 'تم التسليم' %}
+                                    <p>الحالة: <span style="color: blue">{{ i.status }}</span></p>
+
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row row justify-content-around" dir="rtl">
+
+                            <div class="col-md-4 col-12">
+                                <p>المدينة: {{ i.city.name }}</p>
+                            </div>
+                            <div class="col-md-4 col-12  ">
+                                <p>العنوان: {{ i.address }}</p>
+
+                            </div>
+                        </div>
+                        <div class="row row justify-content-around" dir="rtl">
+
+                            <div class="col-md-4 col-12">
+                                <p>السعر الكلي: {{ i.total_price }}₪</p>
+                            </div>
+                            <div class="col-md-4 col-12  ">
+                                <p><span style="color: #ffc107">اضغط على البطاقة لمعرفة تفاصيل الطلب</span></p>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </a>
+                <div class="card-footer" dir="rtl">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <h5> تاريخ الطلب: {{ i.order_date }}</h5>
+
+                        </div>
+                        {% if i.status == 'بانتظار التأكيد' %}
+                            <div class="col-md-col-12 col-6 justify-content-md-end d-flex">
+                                <a href="deleteOrder/{{ i.id }}" class="btn btn-danger">حذف الطلبية</a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% include 'base components/ordersPagination.html' %}
+    <div style="height: 500px"></div>
+{% endblock content %}

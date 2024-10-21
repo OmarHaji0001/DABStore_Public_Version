@@ -1,0 +1,21 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-10 mb-4">
+                <a class="btn btn-dark w-100 mt-1" href="{% url 'addCity' %}">Add City</a>
+            </div>
+            {% for i in cities %}
+                <div class="col-11 col-md-5 m-2 card">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">{{ i.name }}</h5>
+                        <a class="btn btn-dark w-100 mt-1" href="{% url 'editCity' i.id %}">Edit</a>
+                        <a class="btn btn-danger w-100 mt-1" href="deleteCity/{{ i.id }}/">Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

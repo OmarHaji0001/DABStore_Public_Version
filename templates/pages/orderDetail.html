@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div style="height: 500px"></div>
+    <div class="container mt-3">
+        <div class="row justify-content-center">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row" dir="rtl">
+                        <div class="col-md-4 col-12 justify-content-center d-flex">
+                            <h5>رقم الطلب: {{ order.id }}</h5>
+                        </div>
+                        <div class="col-md-4 col-12 justify-content-center d-flex ">
+                            <h5>المستخدم: {{ order.user.first_name }} {{ order.user.last_name }}</h5>
+                        </div>
+                        <div class="col-md-4 col-12 justify-content-center d-flex ">
+                            <h5>السعر الكلي: {{ order.total_price }}₪</h5>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% for product in products %}
+
+            <div class="card m-3 p-md-0 p-1">
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex align-items-center justify-content-md-start justify-content-center">
+                        <img src="{{ product.product.image.url }}" class="img-fluid rounded-start"
+                             style="max-height: 200px; width: auto;" alt="{{ product.product.name }}">
+                    </div>
+                    <div class="col-md-8 d-flex align-items-center">
+                        <div class="card-body">
+                            <div class="row text-md-end text-center" dir="rtl">
+                                <div class="col-12 mb-2">
+                                    <h5 class="card-title">الاسم : {{ product.product.name }}</h5>
+                                </div>
+
+                                <div class="col-12">
+                                    <p class="card-text">الكمية المطلوبة : {{ product.quantity }}</p>
+                                </div>
+
+                            </div>
+                            <hr>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        {% endfor %}
+    </div>
+
+{% endblock content %}

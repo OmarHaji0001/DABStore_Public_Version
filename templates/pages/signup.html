@@ -1,0 +1,36 @@
+{% extends 'index.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+    <div style="height: 20px"></div>
+
+    <div class="container d-flex justify-content-center mb-4 mt-5">
+        <div class="card p-2 col-md-8 col-11 col-lg-6">
+            <div>
+                <h2 class="text-center">Sign Up</h2>
+            </div>
+            <form action="/signUp/" method="POST">
+                {% csrf_token %}
+
+                <div class="m-4">
+                    {{ form.first_name | as_crispy_field }}
+                    {{ form.last_name | as_crispy_field }}
+                    {{ form.phone_number | as_crispy_field }}
+                    {{ form.whatsapp | as_crispy_field }}
+                    {{ form.password1 | as_crispy_field }}
+                    {{ form.password2 | as_crispy_field }}
+                </div>
+                <p class="text-center text-muted mt-5 mb-0">Have already an account?
+                    <a href="{% url 'signIn' %}" class="fw-bold text-body">
+                        <u>Log in</u>
+                    </a>
+                </p>
+                <div class="col-12 d-flex justify-content-center mb-2 mt-2">
+
+                    <input type="submit" value="Sign Up" class="btn btn-outline-dark">
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row align-items-center">
+            <!-- Product Image Section -->
+            <div class="col-md-6 text-center">
+                {% include 'base components/imagePlayer.html' %}
+            </div>
+            <div class="col-md-6">
+            <!-- Product Details Section -->
+                <h2 class="product-title"
+                    style="color: #ffffff; font-size: 2.5rem; font-weight: bold; text-align: right;">{{ product.name }}</h2>
+                <p class="product-description" style="color: #ffffff; text-align: right;">
+                    {{ product.description }}
+                </p>
+                <p class="product-price" style="color: #ffffff; font-size: 1.5rem; text-align: right;">
+                    {% if product.discount > 0 %}
+                        السعر:
+                        <span style="text-decoration: line-through;">₪{{ product.price }} </span>
+                        <span style="color: #ffc107;">₪{{ product.discount }} </span>
+                    {% else %}
+                        السعر: ₪{{ product.price }}
+                    {% endif %}
+                </p>
+                <p class="product-stock" style="color: #ffc107; text-align: right;">
+                    الكمية المتبقية: {{ product.quantity }}
+                </p>
+
+                <!-- Order Form -->
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex align-items-center mt-4">
+                        <!-- Quantity Selector -->
+                        <div class="quantity d-flex align-items-center me-3">
+                            <button type="button" class="btn btn-outline-primary" id="decrement-btn">-</button>
+                            <input type="text" name="quantity" value="1" id="quantity-input" class="text-center mx-2 mt-0 mb-0"
+                                   style="width: 50px; border: none;">
+                            <button type="button" class="btn btn-outline-primary" id="increment-btn">+</button>
+                        </div>
+
+                        <!-- Order Now Button -->
+                        <button type="submit" class="btn btn-primary btn-lg">أطلب الان</button>
+                    </div>
+                </form>
+            </div>
+        <!-- End of Product Details Section -->
+        </div>
+    </div>
+
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" id="quantity-alert"
+         style="display: none; position: fixed; top: 0; left: 0; right: 0; z-index: 1050; text-align: center;">
+        أنت تطلب أكثر من الكمية المتاحة!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    {% if messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="order-success-alert"
+             style="position: fixed; top: 0; left: 0; right: 0; z-index: 1050; text-align: center;">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const decrementBtn = document.getElementById('decrement-btn');
+            const incrementBtn = document.getElementById('increment-btn');
+            const quantityInput = document.getElementById('quantity-input');
+            const maxQuantity = {{ product.quantity }};
+            const quantityAlert = document.getElementById('quantity-alert');
+
+            decrementBtn.addEventListener('click', function () {
+                let currentValue = parseInt(quantityInput.value);
+                if (currentValue > 1) {
+                    quantityInput.value = currentValue - 1;
+                }
+                quantityAlert.style.display = 'none'; // Hide alert if quantity is within limit
+            });
+
+            incrementBtn.addEventListener('click', function () {
+                let currentValue = parseInt(quantityInput.value);
+                if (currentValue < maxQuantity) {
+                    quantityInput.value = currentValue + 1;
+                    quantityAlert.style.display = 'none'; // Hide alert if quantity is within limit
+                } else {
+                    quantityAlert.style.display = 'block'; // Show alert if quantity exceeds limit
+                }
+            });
+
+            // Initial check if quantity input exceeds maxQuantity
+            if (parseInt(quantityInput.value) > maxQuantity) {
+                quantityAlert.style.display = 'block';
+            }
+        });
+    </script>
+{% endblock %}

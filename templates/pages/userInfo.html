@@ -1,0 +1,175 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <ul class="nav nav-tabs justify-content-center" id="userTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="user-info-tab" data-bs-toggle="tab" data-bs-target="#user-info"
+                        type="button" role="tab" aria-controls="user-info" aria-selected="true">
+                    <i class="bi bi-person-circle me-2"></i>User Info
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button"
+                        role="tab" aria-controls="orders" aria-selected="false">
+                    <i class="bi bi-cart me-2"></i>Orders
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-4" id="userTabsContent">
+            <div class="tab-pane fade show active" id="user-info" role="tabpanel" aria-labelledby="user-info-tab">
+                <div class="card shadow-lg border-0 p-4 rounded-4">
+                    <h2 class="text-center mb-4">User Information</h2>
+                    <div class="row">
+                        <!-- Full Name -->
+                        <div class="col-md-4 mb-4 d-flex flex-column align-items-center">
+                            <div class="icon-box mb-3 rounded-circle shadow-lg p-4 bg-light">
+                                <i class="bi bi-person-circle" style="font-size: 4rem; color: #6c757d;"></i>
+                            </div>
+                            <p><strong>Full Name:</strong> {{ user1.first_name }} {{ user1.last_name }}</p>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="col-md-4 mb-4 d-flex flex-column align-items-center">
+                            <div class="icon-box mb-3 rounded-circle shadow-lg p-4 bg-light">
+                                <i class="bi bi-phone" style="font-size: 4rem; color: #6c757d;"></i>
+                            </div>
+                            <p><strong>Phone:</strong> ({{ user1.whatsapp }}) {{ user1.phone_number }}</p>
+                        </div>
+
+                        <!-- Total Paid -->
+                        <div class="col-md-4 mb-4 d-flex flex-column align-items-center">
+                            <div class="icon-box mb-3 rounded-circle shadow-lg p-4 bg-light">
+                                <i class="bi bi-wallet-fill" style="font-size: 4rem; color: #6c757d;"></i>
+                            </div>
+                            <p><strong>Total Paid:</strong> {{ total_paid }} شيكل</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="tab-pane fade" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+            <h2 class="text-center mb-4">Orders</h2>
+
+            <div class="accordion" id="ordersAccordion">
+                <div class="accordion-item mb-4 shadow-sm">
+                    <h2 class="accordion-header" id="pending-heading">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#pending-orders" aria-expanded="true"
+                                aria-controls="pending-orders">
+                            <i class="bi bi-hourglass-split text-warning me-2"></i>بانتظار التأكيد
+                        </button>
+                    </h2>
+                    <div id="pending-orders" class="accordion-collapse collapse show"
+                         aria-labelledby="pending-heading" data-bs-parent="#ordersAccordion">
+                        <div class="accordion-body">
+                            {% if pending_orders %}
+                                {% for order in pending_orders %}
+                                    <div class="card mb-3 border-0 shadow-sm hover-shadow rounded-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Order ID: {{ order.id }}</h5>
+                                            <p>Order Date: {{ order.order_date }}</p>
+                                            <p>Total Price: {{ order.total_price }} شيكل</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-center">No orders pending confirmation.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item mb-4 shadow-sm">
+                    <h2 class="accordion-header" id="confirmed-heading">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#confirmed-orders" aria-expanded="false"
+                                aria-controls="confirmed-orders">
+                            <i class="bi bi-check-circle-fill text-primary me-2"></i>تم التأكيد
+                        </button>
+                    </h2>
+                    <div id="confirmed-orders" class="accordion-collapse collapse"
+                         aria-labelledby="confirmed-heading" data-bs-parent="#ordersAccordion">
+                        <div class="accordion-body">
+                            {% if confirmed_orders %}
+                                {% for order in confirmed_orders %}
+                                    <div class="card mb-3 border-0 shadow-sm hover-shadow rounded-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Order ID: {{ order.id }}</h5>
+                                            <p>Order Date: {{ order.order_date }}</p>
+                                            <p>Total Price: {{ order.total_price }} شيكل</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-center">No confirmed orders.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item mb-4 shadow-sm">
+                    <h2 class="accordion-header" id="delivered-heading">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#delivered-orders" aria-expanded="false"
+                                aria-controls="delivered-orders">
+                            <i class="bi bi-box-seam text-success me-2"></i>تم التسليم
+                        </button>
+                    </h2>
+                    <div id="delivered-orders" class="accordion-collapse collapse"
+                         aria-labelledby="delivered-heading" data-bs-parent="#ordersAccordion">
+                        <div class="accordion-body">
+                            {% if delivered_orders %}
+                                {% for order in delivered_orders %}
+                                    <div class="card mb-3 border-0 shadow-sm hover-shadow rounded-3">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Order ID: {{ order.id }}</h5>
+                                            <p>Order Date: {{ order.order_date }}</p>
+                                            <p>Total Price: {{ order.total_price }} شيكل</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="text-center">No delivered orders.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <style>
+        .icon-box {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        .hover-shadow:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .accordion-button i {
+            font-size: 1.5rem;
+        }
+
+        .accordion-item {
+            border-radius: 15px;
+        }
+
+        .card {
+            border-radius: 15px;
+        }
+    </style>
+        <div style="height: 500px"></div>
+
+{% endblock %}

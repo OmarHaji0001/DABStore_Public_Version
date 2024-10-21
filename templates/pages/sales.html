@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center mb-5 sales-report-section">
+            <div class="col-md-8">
+                <form method="GET" action="{% url 'generate_sales_report' %}" class="sales-report-form">
+                    <div class="row mb-4">
+                        <div class="col">
+                            <label for="start_date" class="form-label">Start Date</label>
+                            <input type="date" name="start_date" id="start_date" class="form-control rounded-pill"
+                                   required>
+                        </div>
+                        <div class="col">
+                            <label for="end_date" class="form-label">End Date</label>
+                            <input type="date" name="end_date" id="end_date" class="form-control rounded-pill" required>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill px-4">
+                            Generate Sales Report
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

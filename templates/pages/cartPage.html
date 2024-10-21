@@ -1,0 +1,125 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <div style="height: 50px"></div>
+    <div style="height: 5000px"></div>
+    <div class="container mt-3">
+        <div class="row justify-content-center">
+            <div class="col-12 mt-2">
+                <div class="card m-3 p-2 justify-content-center align-items-center">
+                    <div class="card-body ">
+                        <h2 class="text-center">My Cart</h2>
+                    </div>
+
+                    <div class="row justify-content-around align-items-center col-12">
+                        <div class="col-12 col-md-4 justify-content-center align-items-center d-flex">
+                            <p class="p-0 m-0">Total Price : <span style="color: #ffc107">{{ total }}</span></p>
+
+                        </div>
+                        {#                            {% if products|length > 0 %}#}
+                        <div class="col-12 col-md-3 justify-content-center d-flex">
+                            <button class="btn btn-success  col-11 col-md-12  mt-2 " id="openPopup">طلبية جديدة</button>
+                        </div>
+                        {#                            {% endif %}#}
+
+                    </div>
+
+                </div>
+            </div>
+
+            {% for product in products %}
+
+                <div class="card m-3 p-md-0 p-1">
+                    <div class="row g-0">
+                        <div class="col-md-4 d-flex align-items-center justify-content-md-start justify-content-center">
+                            <img src="{{ product.product.image.url }}" class="img-fluid rounded-start"
+                                 style="max-height: 200px; width: auto;" alt="{{ product.product.name }}">
+                        </div>
+                        <div class="col-md-8 d-flex align-items-center">
+                            <div class="card-body">
+                                <div class="row text-md-end text-center" dir="rtl">
+                                    <div class="col-12 mb-2">
+                                        <h5 class="card-title">الاسم : {{ product.product.name }}</h5>
+                                    </div>
+                                    <div class="col-4">
+                                        <p class="card-text">السعر :
+                                            {% if product.product.discount > 0 %}
+                                                <span class="text-decoration-line-through">{{ product.product.price }}</span>
+                                                <span style="color: #ffc107">{{ product.product.discount }}</span>
+                                            {% else %}
+                                                {{ product.product.price }}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p class="card-text">الكمية : {{ product.quantity }}</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <p class="card-text">السعر الكلي : {{ product.total_price }} ₪</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row justify-content-md-end justify-content-center mt-3">
+                                    <a href="deleteFromCart/{{ product.id }}/"
+                                       class="btn btn-danger col-md-3 col-5 mb-2 mb-md-0">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            {% endfor %}
+
+
+        </div>
+    </div>
+
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" id="order-success-alert"
+                     style="position: fixed; top: 0; left: 0; right: 0; z-index: 1050; text-align: center;">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            {% elif message.tags == 'error' %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" id="order-success-alert"
+                     style="position: fixed; top: 0; left: 0; right: 0; z-index: 1050; text-align: center;">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+<div id="popupForm" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <form method="post" action="">
+            {% csrf_token %}
+            <select class="form-select" name="city" id="city" required>
+                <option value="" disabled selected>اختر المدينة</option>
+                {% for i in city %}
+                    <option value="{{ i.id }}">{{ i.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="address">ادخل عنوان التوصيل:</label>
+            <input type="text" id="address" name="address" required>
+
+            <input type="hidden" id="total" name="total" value="{{ total }}">
+            <p class="note">ملاحظة سوف يتم التواصل معك لتأكيد الطلبية على رقم هاتفك</p>
+
+            <div class="buttons">
+                <button type="submit" class="confirm">تأكيد</button>
+                <button type="button" class="cancel" id="cancelButton">إلغاء</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="{% static 'js/popScript.js' %}"></script>
+
+{% endblock content %}

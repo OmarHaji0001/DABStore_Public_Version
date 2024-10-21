@@ -1,0 +1,135 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/adminPanel.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <div class="container mt-4">
+
+        <div class="section mb-5 cities-section">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3>Cities Sales</h3>
+                <a href="{% url 'cities' %}" class="btn btn-primary">Manage Cities</a>
+            </div>
+            <div class="row cities-container mt-4">
+                {% for city in cities_sales %}
+                    <div class="col-lg-2 col-md-4 col-sm-6 mb-4 city-card"> <!-- Adjusted column classes -->
+                        <div class="text-center">
+                            <i class="fas fa-city fa-3x city-icon"></i>
+                            <h5 class="mt-2">{{ city.city__name }}</h5>
+                            <p>₪{{ city.total_sales }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Categories Section - Unchanged -->
+        <div class="section mb-5">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3>Categories</h3>
+                <a href="{% url 'categories' %}" class="btn btn-primary">Manage Categories</a>
+            </div>
+            <div class="d-flex flex-wrap mt-4 justify-content-between">
+                {% for category in categories %}
+                    <div class="category-card text-center mx-2 my-2">
+                        <i class="fas fa-shopping-bag fa-2x mb-2 category-icon"></i>
+                        <p>{{ category.name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>Sales This Year</h3>
+            <a href="{% url 'sales' %}" class="btn btn-primary">Generate a Sales Report</a>
+        </div>
+        <div class="section mb-5 sales-section">
+            <p class="mb-0 sales-paragraph">This year's sales amount is <strong>₪{{ sales_this_year }}</strong></p>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>Orders</h3>
+            <a href="{% url 'adminOrders' %}" class="btn btn-primary">View All Orders</a>
+        </div>
+        <div class="section mb-5 orders-section">
+            <div class="d-flex justify-content-center flex-column align-items-center">
+                <div class="order-status d-flex flex-column flex-md-row justify-content-around align-items-center w-100">
+                    <p class="order-item mb-3 mb-md-0">Pending: <span
+                            class="badge bg-warning text-dark">{{ pending_count }}</span></p>
+                    <p class="order-item mb-3 mb-md-0">Confirmed: <span
+                            class="badge bg-primary text-white">{{ confirmed_count }}</span></p>
+                    <p class="order-item mb-3 mb-md-0">Delivered: <span
+                            class="badge bg-success text-white">{{ delivered_count }}</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>Users</h3>
+            <a href="{% url 'usersPage' %}" class="btn btn-primary">View All Users</a>
+        </div>
+        <div class="section mb-5 users-section">
+            <p class="mb-0 active-paragraph">Number of users: <strong>{{ active_users }}</strong></p>
+        </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>Products</h3>
+            <a href="{% url 'adminProducts' %}" class="btn btn-primary">View All Products</a>
+        </div>
+        {% include 'base components/topSalesCarousel.html' %}
+    </div>
+
+
+
+    <style>
+        .sales-section,
+        .orders-section,
+        .users-section {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-status {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .order-item {
+            flex: 0 0 auto; /* Maintain the size of each item */
+            font-weight: bold;
+            font-size: 1.2rem; /* Larger font size */
+            text-align: center; /* Center the text */
+        }
+
+        .badge {
+            font-size: 0.9rem;
+            padding: 5px 10px;
+            border-radius: 12px;
+        }
+
+        .city-card {
+            flex: 0 0 20%;
+            max-width: 20%;
+        }
+
+        .city-icon,
+        .category-icon {
+            color: #343a40; /* Dark gray for better visibility */
+        }
+
+        .sales-paragraph,
+        .active-paragraph {
+            font-size: 1.5rem; /* Larger font size */
+            color: #343a40; /* Dark gray for better readability */
+        }
+
+        h3 {
+            color: #212529; /* Dark color for titles */
+        }
+    </style>
+{% endblock %}

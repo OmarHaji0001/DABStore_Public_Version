@@ -1,0 +1,164 @@
+
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(
+            #38017E,
+            #BB6868
+    ) no-repeat;
+    background-size: 100% 300px; /* Gradient applies only to the first 250px */
+    background-color: #BB6868; /* Fallback color for the rest of the element */
+}
+
+html {
+
+    height: 100%;
+}
+
+.footer {
+
+    margin-top: auto;
+}
+
+.logoTextStyle {
+    color: #F07979;
+    font-weight: 600;
+    font-size: 19px;
+}
+
+.logoStyle {
+    display: inline-block;
+
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 19px;
+    font-weight: 600;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: #a3a3a3;
+}
+
+.bannerStyle {
+    width: 100%;
+    min-height: 300px;
+    max-height: 650px;
+}
+
+
+.image-container {
+    position: relative;
+}
+
+.image-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0; /* Position the gradient at the bottom */
+    left: 0;
+    width: 100%;
+    height: 150px; /* Set the height to the area where you want the gradient */
+    background: linear-gradient(to bottom, rgba(187, 104, 104, 0) 0%, rgb(187, 104, 104) 100%);
+    pointer-events: none; /* Allows clicking through the overlay */
+}
+
+img {
+    pointer-events: none;
+}
+
+.textFormatLogo {
+    font-family: piepie, sans-serif;
+    font-style: normal;
+    color: rgb(255, 255, 255);
+}
+
+.centerLogo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.shadow-lg:hover {
+    background-color: #f0f0f0;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #212429;
+    border-color: #212429;
+    color: #ffffff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #4c525a;
+    border-color: #5a6268;
+    color: #ffffff;
+}
+
+.pagination .page-link {
+    color: #6c757d;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination .page-link:hover {
+    color: #ffffff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.pagination .page-item.active .page-link {
+    z-index: 1;
+    color: #ffffff;
+    background-color: #212429;
+    border-color: #212429;
+}
+
+#decrement-btn, #increment-btn {
+    background-color: #212429;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#decrement-btn:hover, #increment-btn:hover {
+    background-color: #4c525a;
+}
+
+.card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6) !important;
+    cursor: pointer;
+}
+
+.custom-search-bar {
+    border-radius: 30px;
+    overflow: hidden;
+    border: 2px solid #2d2c2c;
+}
+
+.search-input {
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    height: 40px;
+}
+
+.search-icon {
+    background-color: #2d2c2c;
+    color: #fff;
+    border: none;
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+}
+
+.search-input:focus {
+    outline: none;
+}

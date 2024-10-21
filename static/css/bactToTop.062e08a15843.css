@@ -1,0 +1,87 @@
+/**
+ * Back To Top Button Styles
+ * From Will-Myers.com
+ */
+#wm-back-to-top {
+  z-index:999;
+  position:fixed;
+  display:flex;
+  bottom:0;
+  right:0;
+  min-width: 50px;
+  min-height: 50px;
+  flex-direction: column;
+  gap: 1px;
+  align-items:center;
+  justify-content:center;
+  box-sizing:content-box;
+  margin: 14px;
+  padding: 3px;
+  cursor:pointer;
+  opacity:0;
+  overflow:hidden;
+  transform: translateY(0px) scale(1);
+  background:transparent;
+  border-radius: 50px;
+  border-width: 0px;
+  border-color: #000000;
+  border-style:solid;
+  visibility:hidden;
+  transition: opacity .3s ease,
+    transform .3s ease,
+    visibility 0s ease .3s;
+  will-change:transform;
+  backdrop-filter: blur(0px);
+
+  &.show{
+    transform: translateY(0px);
+    opacity:1;
+    visibility: visible;
+    transition: opacity .3s ease,
+      transform .3s ease,
+      visibility 0s ease 0s;
+  }
+  .icon{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    line-height:0;
+    height:auto;
+    width:auto;
+  }
+  .text{
+    position:relative;
+    margin:0;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #000000;
+    text-transform: uppercase;
+  }
+  svg{
+    width: 20px;
+    height: 20px;
+  }
+  path{
+    stroke-width: 5px;
+    stroke: #000000;
+  }
+  .btt-background {
+    box-sizing:border-box;
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    background-color: #f5f5f5;
+    opacity: 1;
+    transition: opacity .3s ease;
+  }
+
+  &:hover{
+    transform:translateY(-3px);
+    opacity: .85;
+  }
+  &:active{
+    transform: translateY(-3px) scale(.95);
+  }
+}

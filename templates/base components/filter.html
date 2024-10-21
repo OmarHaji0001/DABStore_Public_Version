@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="filter-container p-3 my-4 rounded-3 bg-light bg-opacity-50 mx-auto" style="max-width: 900px;">
+        <h5 class="text-center mb-3">إضافة فلتر للبحث</h5>
+        <form id="filterForm" class="row g-3 justify-content-around align-items-center" method="GET">
+            <div class="filter-group col-12 col-md-4">
+                <label for="categoryFilter" class="form-label text-center w-100">التصنيف</label>
+                <select id="categoryFilter" name="category" class="form-select w-100">
+                    <option value="all" {% if selected_category == "all" %}selected{% endif %}>الكل</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if category.id|stringformat:"s" == selected_category %}selected{% endif %}>
+                            {{ category.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="filter-group col-12 col-md-4">
+                <label for="priceFilter" class="form-label text-center w-100">السعر</label>
+                <select id="priceFilter" name="price" class="form-select w-100">
+                    <option value="all" {% if selected_price == "all" %}selected{% endif %}>-----</option>
+                    <option value="low-high" {% if selected_price == "low-high" %}selected{% endif %}>من الأقل للأعلى</option>
+                    <option value="high-low" {% if selected_price == "high-low" %}selected{% endif %}>من الأعلى للأقل</option>
+                </select>
+            </div>
+
+            <div class="filter-group col-12 col-md-4">
+                <label for="genderFilter" class="form-label text-center w-100">الفئة</label>
+                <select id="genderFilter" name="gender" class="form-select w-100">
+                    <option value="all" {% if selected_gender == "all" %}selected{% endif %}>الكل</option>
+                    <option value="Male" {% if selected_gender == "Male" %}selected{% endif %}>رجال</option>
+                    <option value="Female" {% if selected_gender == "Female" %}selected{% endif %}>نساء</option>
+                </select>
+            </div>
+
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-primary">تصفية النتائج</button>
+            </div>
+        </form>
+    </div>
+</div>

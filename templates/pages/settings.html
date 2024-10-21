@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<div style="height: 20px"></div>
+
+    <div class="container d-flex justify-content-center mb-4 mt-5">
+        <div class="card p-2 col-md-8 col-11 col-lg-6">
+            <div>
+                <h2 class="text-center">Settings</h2>
+            </div>
+            <form action="/settings/" method="POST">
+                {% csrf_token %}
+
+                <div class="m-4">
+                    {{ form.first_name | as_crispy_field }}
+                    {{ form.last_name | as_crispy_field }}
+                    {{ form.whatsapp | as_crispy_field }}
+                </div>
+                <div class="col-12 d-flex justify-content-center mb-2 mt-2">
+
+                    <a href="{% url 'changePassword' %}" class="btn btn-outline-primary w-25">Change Password</a>
+                </div>
+                <div class="col-12 d-flex justify-content-center mb-2 mt-2">
+
+                    <input type="submit" value="Save" class="btn btn-outline-dark w-25">
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

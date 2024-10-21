@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+
+
+{% block mainLogo %}
+    <div class="centerLogo" style="width: 100%;z-index: 1;">
+
+        {% include 'base components/marketLogo.html' %}
+    </div>
+{% endblock mainLogo %}
+
+
+
+{% block banner %}
+    <div class="image-container w-100 " style="z-index: -1">
+        <img src="{{ theme.banner.url }}" alt="DAB STORE" class="bannerStyle" width="100%">
+    </div>
+{% endblock banner %}
+{% block filterBlock %}>
+    {% include 'base components/topSalesCarousel.html' %}
+    {% if not search_query %}
+        {% include 'base components/filter.html' %}
+    {% endif %}
+    {% include 'base components/searchBar.html' with query=search_query placeholder="Search for products..." %}
+{% endblock filterBlock %}
+{% block content %}
+    {% include 'base components/productsGrid.html' %}
+
+{% endblock content %}

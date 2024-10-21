@@ -1,0 +1,33 @@
+<div class="container">
+    <form id="filterForm" class="row g-3 justify-content-end align-items-center w-100" method="GET" action="{{ action_url }}">
+
+
+        <div class="filter-group col-11 col-md-2">
+            <label for="statusFilter" class="form-label text-center w-100">الحالة</label>
+            <select id="statusFilter" name="status" class="form-select w-100">
+                <option value="all" {% if selected_status == "all" %}selected{% endif %}>-----</option>
+                <option value="بانتظار التأكيد" {% if selected_status == 'بانتظار التأكيد' %}selected{% endif %}>
+                    <span style="color: red">بانتظار التأكيد</span></option>
+                <option value="تم التأكيد" {% if selected_status == 'تم التأكيد' %}selected{% endif %}>
+                    <span style="color: green">تم التأكيد</span></option>
+                <option value="تم التسليم" {% if selected_status == 'تم التسليم' %}selected{% endif %}>
+                    <span style="color: blue">تم التسليم</span></option>
+            </select>
+        </div>
+
+
+      <div class="input-group custom-search-bar  p-0 col-11" >
+        <input type="number" name="q" value="{{ query|default:'' }}" class="form-control search-input m-0"
+               placeholder="{{ placeholder|default:'Search...' }}" aria-label="Search">
+        <button class="input-group-text search-icon" type="submit">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+        <div class="row mt-3 w-100 d-flex justify-content-end">
+            <div class="   col-6 col-md-3 ">
+                <input type="submit" class="btn btn-primary w-100" value="تصفية النتائج">
+            </div>
+        </div>
+    </form>
+
+</div>

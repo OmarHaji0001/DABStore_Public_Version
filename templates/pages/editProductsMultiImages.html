@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+<div class="container mt-4">
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="row align-items-center" dir="rtl">
+                <div class="col-md-8 col-12 mb-3 mb-md-0">
+                    <h2 class="display-6 fw-bold text-primary">المنتج: {{ product.name }}</h2>
+                </div>
+                <div class="col-md-4 col-12">
+                    <!-- Form for uploading multiple images -->
+                    <form  action="" method="POST" enctype="multipart/form-data" class="row g-2">
+                        {% csrf_token %}
+                        <div class="col-12">
+                            <input type="file" name="Multi Images" accept="image/*"  class="form-control" multiple>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-success w-100">رفع الصور</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="w-50 mx-auto mt-4">
+</div>
+
+    <div class="row">
+        <!-- Loop through the images and display them -->
+        {% for image in images %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <!-- Thumbnail image with data-bs-toggle for modal -->
+                <img src="{{ image.image.url }}" class="card-img-top img-fluid" alt="Product Image"
+                     style="height: 270px; object-fit: cover;"
+                     data-bs-toggle="modal" data-bs-target="#imageModal{{ image.id }}">
+                <div class="card-body">
+                    <p class="card-text">Image ID: {{ image.id }}</p>
+                    <a href="{% url 'adminDeleteMultiImageProduct' image.id %}" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+
+
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

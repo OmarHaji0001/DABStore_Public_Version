@@ -1,0 +1,9 @@
+<form method="GET" action="{{ action_url }}" class="mb-4 d-flex justify-content-center">
+    <div class="input-group custom-search-bar" style="max-width: 600px;">
+        <input type="text" name="q" value="{{ query|default:'' }}" class="form-control search-input m-0"
+               placeholder="{{ placeholder|default:'Search...' }}" aria-label="Search">
+        <button class="input-group-text search-icon" type="submit">
+            <i class="bi bi-search"></i>
+        </button>
+    </div>
+</form>

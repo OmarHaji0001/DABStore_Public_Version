@@ -1,0 +1,75 @@
+{% extends 'index.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+
+    <div class="container d-flex justify-content-center mb-4 mt-5">
+        <div class="card p-4 col-md-9 col-11 col-lg-6 ">
+            <div>
+                <h2 class="text-center">Add Product</h2>
+            </div>
+            <form method="POST" enctype="multipart/form-data" id="addProductForm" onsubmit="return validateForm()">
+
+                {% csrf_token %}
+                <div class="m-4">
+                    {{ form.name | as_crispy_field }}
+                    {{ form.price | as_crispy_field }}
+                    {{ form.quantity | as_crispy_field }}
+                    {{ form.gender | as_crispy_field }}
+                    {{ form.discount | as_crispy_field }}
+                    {{ form.category | as_crispy_field }}
+                    {{ form.description | as_crispy_field }}
+                    {{ form.image | as_crispy_field }}
+
+                </div>
+                <div class="col-12 d-flex justify-content-center mb-2 mt-2">
+                    <input type="submit" value="Update" class="btn btn-outline-dark w-25">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+
+    function validateForm() {
+        var price = document.forms["addProductForm"]["price"].value;
+        var quantity = document.forms["addProductForm"]["quantity"].value;
+        var discount = document.forms["addProductForm"]["discount"].value;
+
+        if ( price == "" || quantity == "" || discount == "" ) {
+            alert("All fields must be filled out");
+            return false;
+        }
+        number=Number(price);
+        if (isNaN(number)){
+            alert("Price must be a number");
+            return false;
+        }
+        number=Number(quantity);
+        if (isNaN(number)){
+            alert("Quantity must be a number");
+            return false;
+        }
+        number=Number(discount);
+        if (isNaN(number)){
+            alert("Discount must be a number");
+            return false;
+        }
+        if(price<=0){
+            alert("Price must be greater than 0");
+            return false;
+        }
+        if(quantity<0){
+            {#alert("Quantity must be greater than 0");#}
+            alert("Quantity must be greater than or equal to 0");
+            return false;
+        }
+        if(discount<0){
+            alert("Discount must be greater than or equal to 0");
+            return false;
+        }
+        return true;
+    }
+    </script>
+{% endblock content %}

@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+
+{% block content %}
+    <div style="height: 50px"></div>
+    {% include 'base components/searchBar.html' with query=search_query placeholder="Search by product name" %}
+
+    {% if not search_query %}
+        {% include 'base components/adminFilters.html' %}
+    {% endif %}
+    <div style="height: 50px"></div>
+
+    <div class="container mt-3">
+
+        {% for i in page_obj %}
+            <div class="row justify-content-center">
+                <div class="col-12 mt-2 ">
+                    <div class="card p-md-0 p-1">
+                        <div class="row g-0">
+                            <div class="col-md-4 d-flex align-items-center justify-content-md-start justify-content-center">
+                                <img src="{{ i.image.url }}" class="img-fluid rounded-start"
+                                     style="max-height: 200px; width: auto;" alt="{{ i.name }}">
+                            </div>
+                            <div class="col-md-8 d-flex align-items-center">
+                                <div class="card-body">
+                                    <div class="row text-md-end text-center" dir="rtl">
+                                        <div class="col-12 mb-2">
+                                            <h5 class="card-title">الاسم : {{ i.name }}</h5>
+                                        </div>
+                                        <div class="col-6">
+                                            <p class="card-text">السعر : {{ i.price }}</p>
+                                        </div>
+                                        <div class="col-6">
+                                            <p class="card-text">الكمية : {{ i.quantity }}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row justify-content-md-end justify-content-center mt-3">
+                                        <a href="editProduct/{{ i.id }}"
+                                           class="btn btn-primary col-md-3 col-7 me-md-2 mb-2 mb-md-0">Edit</a>
+                                        <a href='{% url 'editProductMultiImgae' i.id %}'
+                                           class="btn btn-primary col-md-3 col-7 me-md-2 mb-2 mb-md-0">Edit MultiImages</a>
+                                        <a href="deleteProduct/{{ i.id }}/"
+                                           class="btn btn-danger col-md-3 col-7 mb-2 mb-md-0">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% include 'base components/adminPagination.html' %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Users</h1>
+
+        {% include 'base components/searchBar.html' with action_url=request.path placeholder="Search by name or phone number" %}
+
+        <div class="row">
+            {% for user in page_obj %}
+                <div class="col-md-3 mb-4">
+                    <a href="{% url 'userInfo' user.id %}" style="text-decoration: none; color: inherit;">
+                        <div class="card shadow-sm text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                                <p class="card-text">Phone: ({{ user.whatsapp }}) {{ user.phone_number }}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% include 'base components/usersAdminPagination.html' %}
+    </div>
+{% endblock %}

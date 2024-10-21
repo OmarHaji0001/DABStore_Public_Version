@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+    <div class="container d-flex justify-content-center mb-4 mt-5">
+        <div class="card p-2 col-md-8 col-11 col-lg-6">
+            <div>
+                <h2 class="text-center">Add</h2>
+            </div>
+            <form action="" method="POST">
+                {% csrf_token %}
+
+                <div class="m-4">
+                    {{ form | crispy }}
+
+                </div>
+                <div class="col-12 d-flex justify-content-center mb-2 mt-2">
+
+                    <input type="submit" value="add" class="btn btn-outline-dark">
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

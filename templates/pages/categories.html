@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-10 mb-4">
+                <a class="btn btn-dark w-100 mt-1" href="{% url 'addCategory' %}">Add Category</a>
+            </div>
+            {% for i in categories %}
+                {% if i.name == 'Default' or i.id == 1 %}
+                {% else %}
+                    <div class="col-11 col-md-5 m-2 card">
+                        <div class="card-body">
+                            <h5 class="card-title text-center">{{ i.name }}</h5>
+                            <a class="btn btn-dark w-100 mt-1" href="{% url 'editCategory' i.id %}">Edit</a>
+                            <a class="btn btn-danger w-100 mt-1" href="deleteCategory/{{ i.id }}/">Delete</a>
+                        </div>
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

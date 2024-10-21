@@ -1,0 +1,64 @@
+<div class="container">
+    <form id="filterForm" class="row g-3 justify-content-end align-items-center w-100" method="GET">
+        <div class="filter-group col-11 col-md-2">
+            <label for="categoryFilter" class="form-label text-center w-100">التصنيف</label>
+            <select id="categoryFilter" name="category" class="form-select w-100">
+                <option value="all" {% if selected_category == "all" %}selected{% endif %}>الكل</option>
+                {% for category in categories %}
+                    <option value="{{ category.id }}"
+                            {% if category.id|stringformat:"s" == selected_category %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="filter-group col-11 col-md-2">
+            <label for="priceFilter" class="form-label text-center w-100">السعر</label>
+            <select id="priceFilter" name="price" class="form-select w-100">
+                <option value="all" {% if selected_price == "all" %}selected{% endif %}>-----</option>
+                <option value="low-high" {% if selected_price == "low-high" %}selected{% endif %}>من الأقل للأعلى
+                </option>
+                <option value="high-low" {% if selected_price == "high-low" %}selected{% endif %}>من الأعلى للأقل
+                </option>
+            </select>
+        </div>
+        <div class="filter-group col-11 col-md-2">
+            <label for="quantityFilter" class="form-label text-center w-100">الكمية</label>
+            <select id="quantityFilter" name="quantity" class="form-select w-100">
+                <option value="all" {% if selected_quantity == "all" %}selected{% endif %}>-----</option>
+                <option value="low-high" {% if selected_quantity == "low-high" %}selected{% endif %}>من الأقل للأعلى
+                </option>
+                <option value="high-low" {% if selected_quantity == "high-low" %}selected{% endif %}>من الأعلى للأقل
+                </option>
+            </select>
+        </div>
+        <div class="filter-group col-11 col-md-2">
+            <label for="discountFilter" class="form-label text-center w-100">الخصم</label>
+            <select id="discountFilter" name="discount" class="form-select w-100">
+                <option value="all" {% if selected_discount == "all" %}selected{% endif %}>الكل</option>
+                <option value="with-discount" {% if selected_discount == "with-discount" %}selected{% endif %}>مع خصم
+                </option>
+                <option value="without-discount" {% if selected_discount == "without-discount" %}selected{% endif %}>بدون خصم
+                </option>
+            </select>
+        </div>
+        <div class="filter-group col-11 col-md-2">
+            <label for="genderFilter" class="form-label text-center w-100">الفئة</label>
+            <select id="genderFilter" name="gender" class="form-select w-100">
+                <option value="all" {% if selected_gender == "all" %}selected{% endif %}>الكل</option>
+                <option value="Male" {% if selected_gender == "Male" %}selected{% endif %}>رجال</option>
+                <option value="Female" {% if selected_gender == "Female" %}selected{% endif %}>نساء</option>
+            </select>
+        </div>
+        <div class="row mt-3 w-100 d-flex justify-content-end">
+            <div class="   col-6 col-md-3 ">
+                <input type="submit" class="btn btn-primary w-100" value="تصفية النتائج">
+            </div>
+            <div class=" col-6 col-md-3 pe-2 ">
+                <a  class="btn btn-primary w-100" href="{% url 'adminAddProduct' %}">اضافة منتج</a>
+            </div>
+        </div>
+    </form>
+
+</div>

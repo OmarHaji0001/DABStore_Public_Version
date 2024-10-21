@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+    <div style="height: 20px"></div>
+    <div class="container d-flex justify-content-center mb-4 mt-5">
+        <div class="card p-2 col-md-6 col-11 col-lg-4">
+            <div>
+                <h2 class="text-center">Log In</h2>
+            </div>
+            <form action="/signIn/" method="POST">
+                {% csrf_token %}
+                <div class="m-4">
+                    {{ form.username | as_crispy_field }}
+
+                    {{ form.password | as_crispy_field }}
+                </div>
+                <p class="text-center text-muted mt-5 mb-0">Create new account
+                    <a href="{% url 'signUp' %}" class="fw-bold text-body">
+                        <u>sign Up</u>
+                    </a>
+                </p>
+                <div class="col-12 d-flex justify-content-center mb-2 mt-2">
+
+                    <input type="submit" value="Log In" class="btn btn-outline-dark">
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
